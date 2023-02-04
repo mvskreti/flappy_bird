@@ -1,10 +1,11 @@
+import random
 import sys
 import pygame
 from pygame import *
 
-WEIGHT = 289
+WIDTH = 289
 HEIGHT = 511
-SCREEN = pygame.display.set_mode((WEIGHT, HEIGHT))
+SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 GAME_SPRITES = {}
 GAME_SOUNDS = {}
 GROUNDY = HEIGHT * 0.8
@@ -17,7 +18,7 @@ PLAYER = 'gallery/sprites/bird.png'
 
 def welcomeScreen():
 
-    playerx = int(WEIGHT / 5)
+    playerx = int(WIDTH / 5)
     playery = int((HEIGHT - GAME_SPRITES['player'].get_height() / 2))
     messagex = int((HEIGHT - GAME_SPRITES['player'].get_width() / 2))
     messagey = int(HEIGHT * 0.13)
@@ -38,6 +39,19 @@ def welcomeScreen():
                 SCREEN.blit(GAME_SPRITES['base'], (basex, GROUNDY))
                 pygame.display.update()
                 FPSCLOCK.tick(FPS)
+
+
+def getRandomPire():
+    pipeHeight = GAME_SPRITES['pipe'][0].get_height()
+    offset = SCREEN/3
+    y2 = offset + \
+        random.randrange(
+            0, int(HEIGHT - GAME_SPRITES['base'].get_height() - 1.2 * offset))
+    pipeX = WIDTH + 10
+    y1 = HEIGHT - y2 + offset
+    pipe = [{'x': pipeX, 'y': - y1},  # upper pipe,
+            {'x': pipeX, 'y': y2}]  # lower pipe
+    return pipe
 
 
 if __name__ == "__main__":
